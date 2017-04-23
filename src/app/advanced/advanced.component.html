@@ -1,12 +1,11 @@
 <div class="col-md-6">
-  <h1>For now not workin</h1>
   <h2>Advanced Options</h2>
   <form >
     <div class='form-group'>
       <label for="database">Database API key: </label>      
       <input type="text"  class="form-control" id="database" #apiKey placeholder="type database API key"><br>
     
-      <input type="button" class="btn btn-default"  value="Submit" (click)="changeDBapiKey(key.value)"> 
+      <input type="button" class="btn btn-default"  value="Submit" (click)="setApiKey(apiKey.value)"> 
       
     </div>
     <div class='form-group'>
@@ -18,10 +17,12 @@
       <input id="password" class="form-control" type="password" placeholder="type your new password" #password><br>
     </div>
 
-    <input type="button" class="btn btn-default"  value="Submit" (click)="changeCredentials(username.value,password.value)"> 
+    <input type="button" class="btn btn-default"  value="Submit" (click)="setCredentials(username.value,password.value)"> 
 
     <br>
     <br>
+    <h1>For now not workin</h1>
+    
     <h3>Raspbery Settings</h3>
 
     <div class='form-group'>

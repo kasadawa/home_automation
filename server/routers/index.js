@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
+var fs = require('fs');
+var sjcl = require('sjcl');
 //change the line below for your mongodb
 // copy the link in your database and paste your collection 
-var db = mongojs('mongodb://kasadawa:kasadawa@ds133388.mlab.com:33388/mean_appz',['devices']);
+var UserFile = fs.readFileSync('./json/user.json',"UTF-8");
+UserFile = JSON.parse(UserFile);
+var db = mongojs(UserFile.apiKey,['devices']);
 
 exports.db = db;
 
@@ -12,6 +16,7 @@ exports.db = db;
 
 var five_relays = [] ;
 var avaibleGPIOs = [];
+
 
 
 function registerDevices(devices){ // can work with multiply devices or with single
@@ -42,7 +47,6 @@ function updateDevice(id, newState){
                 newState = arrObject[1].state;  
             } 
             else arrObject[1].state = newState ;
-            // newState ? arrObject[0].open() : arrObject[0].close();
         }
     });
 }
@@ -159,6 +163,36 @@ router.put('/sw-device/:id',(req,res,next)=>{
         })
     }
 });
+
+
+// change mongoDB API key
+router.post('/change-api-key',(req,res)=>{
+    var key = req.body.apiKey;
+    UserFile = fs.readFileSync('./json/user.json',"UTF-8");
+    UserFile = JSON.parse(UserFile);
+    
+    UserFile.apiKey = key ;
+    fs.writeFile('./json/user.json',JSON.stringify(UserFile,null,'\t'),(err)=>{
+        if(err) throw err;
+        else res.json('succes');
+    });
+});
+router.post('/change-credentials',(req,res)=>{
+    var username = req.body.username;
+    var password = req.body.password;
+    UserFile = fs.readFileSync('./json/user.json',"UTF-8");
+    UserFile = JSON.parse(UserFile);
+    UserFile.username = username ;
+    // encrypting password
+    var encryptedPass = sjcl.encrypt("password", password);
+    UserFile.password = encryptedPass ; 
+    fs.writeFile('./json/user.json',JSON.stringify(UserFile,null,'\t'),(err)=>{
+        if(err) throw err;
+        else res.json('success');
+    });
+});
+
+
 
 exports.router = router ; 
 

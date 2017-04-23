@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.use(express.static(path.join(__dirname,'../src')));
+app.use(express.static(path.join(__dirname,'../dist')));
 
 
 
@@ -28,8 +28,8 @@ module.exports = {
 };
 
 var login = require('./routers/login');
-var ioTimer = require('./timer/timer');
-var api = require('./routers/index');
+var ioTimer = require('./timer/rasp_timer');
+var api = require('./routers/rasp_index');
 app.use('/',api.router);
 app.use('/login',login.router);
 
@@ -39,5 +39,5 @@ app.use(redirectUnmatched);
 
 // redirecting to home if there is no router
 function redirectUnmatched(req, res) {
-  res.render('../src/index.html');
+  res.redirect('/');
 }

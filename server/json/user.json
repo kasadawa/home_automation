@@ -1,4 +1,5 @@
 {
-    "username":"kasadawa",
-    "password":"zamunda"
+	"username": "kasadawa",
+	"password": "{\"iv\":\"LZt68fdIpJI9I++vLoQylQ==\",\"v\":1,\"iter\":10000,\"ks\":128,\"ts\":64,\"mode\":\"ccm\",\"adata\":\"\",\"cipher\":\"aes\",\"salt\":\"DFr+aoRyFOM=\",\"ct\":\"Eb0nXM6xPMhPwfeix/2v\"}",
+	"apiKey": "mongodb://kasadawa:kasadawa@ds133388.mlab.com:33388/mean_appz"
 }

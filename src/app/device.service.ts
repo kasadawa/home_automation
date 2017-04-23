@@ -19,7 +19,7 @@ export class DeviceService{
     /* if your on local network type the local IP 
       otherwise  type the global IP                */
     //initialize variables
-    private host = 'http://localhost:3000';
+    private host = 'http://192.168.100.6:3000';
 
     constructor(private http:Http){
         this.socket = io(this.host);
@@ -124,5 +124,18 @@ export class DeviceService{
     //passing the socket variable to timer-modal 
     getSocket(){
         return this.socket;
+    }
+
+
+    // specially for Advanced settings
+    setApiKey(apiKey:any){
+        return this.http.post(this.host + '/change-api-key',{apiKey:apiKey},this.options)
+        .map(res=>res.json())
+        .subscribe(res => console.log(res));
+    }
+    setCredentials(username:any,password:any){
+        return this.http.post(this.host + '/change-credentials',{username:username,password:password},this.options)
+        .map(res=>res.json)
+        .subscribe(res => console.log(res));
     }
 }
