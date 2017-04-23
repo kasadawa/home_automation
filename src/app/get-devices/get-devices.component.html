@@ -1,0 +1,33 @@
+
+    <template #popTemplate>        
+            From: <timepicker [(ngModel)]="startTime" [showSpinners]="ismeridian" [showMeridian]="ismeridian" [readonlyInput]="!isEnabled"></timepicker>
+            To: <timepicker [(ngModel)]="endTime" [showSpinners]="ismeridian" [showMeridian]="ismeridian" [readonlyInput]="!isEnabled"></timepicker>                       
+            <br>
+            <button class="btn btn-primary" (click)="setTimer(device,true)" [disabled]="startDissable">Start</button>
+            <button class="btn btn-danger"(click)="setTimer(device,false)" [disabled]="stopDissable">Stop</button> 
+    </template>
+<h2>My devices</h2>
+    <h3>{{temp}}</h3>
+    <button class="btn btn-danger" *ngIf="devices.length > 0" (click)="deleteAllDevices()">Delete all devices</button>
+    <div class="container" > 
+        <div class="row" >
+            <div class="col-md-3 col-sm-6" *ngFor="let device of devices; let i = index ;">
+                <div class="panel panel-default text-center">
+                    <div class="panel-heading">
+                            <span class="fa-stack fa-5x">
+                                <i class="fa fa-circle fa-stack-2x" [ngClass]="{'text-primary':!device.state,'text-danger':device.state}"></i>
+                                <i [ngClass]="device.icon + ' fa-stack-1x fa-inverse'"></i>
+                            </span>
+                    </div>
+                    <div class="panel-body">
+                        <h4>{{device.type}}</h4>
+                        <p>Device name: {{device.name}}</p>
+                        <button class="btn" [ngClass]="{'btn-primary':!device.state,'btn-danger':device.state}" (click)="changeDeviceState(i)">
+                        <i fa [name]="'power-off'" [size]="1" aria-hidden="false"></i> {{ buttonStr[i] }}</button>
+                        <timer-modal [device] ="device" [buttonStrings] ="buttonStr" (changeDevicestate)="changeDeviceState($event)"></timer-modal>
+                        <delete-modal [device]="device"></delete-modal>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>

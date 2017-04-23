@@ -1,0 +1,19 @@
+
+<h2>Add new device</h2>
+<div>
+  <form class="form-inline">
+    <span>Enter new device: </span>
+    <input id="device-name" [(ngModel)]="deviceName"  type="text" class="form-control" placeholder="Device name" (keyup.enter)="addDevice(deviceName)" [ngModelOptions]="{standalone: true}">
+    <select class="form-control" (change)="changeIcon()" [(ngModel)]="selectedDevice" [ngModelOptions]="{standalone: true}"  >
+        <option [ngValue]="value"  *ngFor='let value of itemTypes'>{{value}}</option>  
+    </select>
+    
+    <i class="fa fa-lightbulb-o" id="icon-prop"></i>
+    <span>Select pin number: </span>
+    <select  class="form-control" [(ngModel)]="selectedPin" [ngModelOptions]="{standalone: true}" >
+          <option [ngValue]="value"  *ngFor='let value of raspiPins'>{{value}}</option>   
+    </select>
+    &nbsp;&nbsp;
+    <input class="btn btn-default" type="button" (click)="addDevice(deviceName)" value="Click">
+  </form>
+</div>

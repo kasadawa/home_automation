@@ -1,0 +1,36 @@
+<div class="col-md-6">
+  <h1>For now not workin</h1>
+  <h2>Advanced Options</h2>
+  <form >
+    <div class='form-group'>
+      <label for="database">Database API key: </label>      
+      <input type="text"  class="form-control" id="database" #apiKey placeholder="type database API key"><br>
+    
+      <input type="button" class="btn btn-default"  value="Submit" (click)="changeDBapiKey(key.value)"> 
+      
+    </div>
+    <div class='form-group'>
+      <label for="username">Change username: </label>
+      <input id="username"  class="form-control" type="text" placeholder="type your new username" #username><br>
+    </div>
+    <div class='form-group'>
+      <label for="password">Change Password: </label>
+      <input id="password" class="form-control" type="password" placeholder="type your new password" #password><br>
+    </div>
+
+    <input type="button" class="btn btn-default"  value="Submit" (click)="changeCredentials(username.value,password.value)"> 
+
+    <br>
+    <br>
+    <h3>Raspbery Settings</h3>
+
+    <div class='form-group'>
+      <label for="pins">Select Pins tht you are using: </label>
+      <input id="pins" type="text" class="form-control" placeholder="type your new password" #pins><br>
+    </div>
+    
+    <input type="button"  class="btn btn-default" value="Submit" (click)="addPins(pins.value)">
+    <br>
+    <br>
+  </form>
+</div>
