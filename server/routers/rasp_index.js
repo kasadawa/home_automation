@@ -203,7 +203,7 @@ router.post('/change-credentials',(req,res)=>{
 
 router.get('/advanced/get-pins',(req,res)=>{
     pinsList = [] ;
-    for(let i = 10; i  <20 ; i++)
+    for(let i = 11; i  <41 ; i++)
     {
         if(!avaibleGPIOs.find(value=> value == ("P1-"+ i) ))
         {
