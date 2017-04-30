@@ -4,6 +4,7 @@ import { AuthHttp } from 'angular2-jwt';
 import { Router } from '@angular/router';
 import {Http} from "@angular/http";
 import {Headers,RequestOptions} from "@angular/http";
+import {host} from "./Device";
 import 'rxjs';
 // Avoid name not found warnings
 declare var auth0: any;
@@ -14,7 +15,6 @@ export class AuthenticationService {
   private options:any;
 
   //change the host name based on your local IP 
-  private host = 'http://192.168.100.6:3000';
   constructor(private router: Router, private authHttp:AuthHttp, private http:Http) {
     this.header = new Headers({'Content-Type': 'application/json'});
     this.options = new RequestOptions({headers:this.header});
@@ -24,7 +24,7 @@ export class AuthenticationService {
 
   public login(username: string, password: string){
 
-      this.http.post(this.host + '/login',{name:username,password:password},this.options).map(res => res.json())
+      this.http.post(host + '/login',{name:username,password:password},this.options).map(res => res.json())
         .subscribe(
           token =>{
             this.setUser(token);
@@ -47,4 +47,5 @@ export class AuthenticationService {
   private setUser(token:any): void {
     localStorage.setItem('jwt_token', token);
   }
+
 }

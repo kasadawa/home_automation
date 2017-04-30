@@ -17,7 +17,8 @@ exports.db = db;
 var five_relays = [] ;
 var avaibleGPIOs = [];
 
-
+// value for advanced options
+var pinsList = [] ; 
 
 function registerDevices(devices){ // can work with multiply devices or with single
     for(var i = 0 ; i < devices.length;i++){
@@ -75,7 +76,7 @@ router.get('/',(req,res,next)=>{
 router.get('/all-devices',(req,res,next)=>{
  //this will be returned to the view component
     // need to be changed specific for your case
-    avaibleGPIOs = ['P1-11','P1-12','P1-13','P1-16'];
+    avaibleGPIOs = UserFile.pins.split(',');
     db.devices.find((err,devices)=>{
         if(err){
             res.send(err);
@@ -192,7 +193,34 @@ router.post('/change-credentials',(req,res)=>{
     });
 });
 
+router.get('/advanced/get-pins',(req,res)=>{
+    pinsList = [] ;
+    for(let i = 10; i  <20 ; i++)
+    {
+        if(!avaibleGPIOs.find(value=> value == ("P1-"+ i) ))
+        {
+            pinsList.push("P1-"+ i);
+        }
+    }
+    res.json(pinsList);
+});
 
+router.delete('/updatePinList/:item', (req,res)=>{
+    var item = req.params.item;
+    var index = pinsList.indexOf(item);
+    if(index != -1)
+    {
+        pinsList.splice(index,  1);
+        UserFile.pins = UserFile.pins + ',' + item ; 
+        UserFile = JSON.stringify(UserFile,null,'\t')
+        fs.writeFileSync('./json/user.json',UserFile);
+        UserFile =fs.readFileSync('./json/user.json','UTF-8');
+        UserFile = JSON.parse(UserFile);
+        res.json('success');
+    }else{
+        res.json('something went wrong')
+    }
+})
 
 exports.router = router ; 
 

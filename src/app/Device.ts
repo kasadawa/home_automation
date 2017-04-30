@@ -15,3 +15,7 @@ export class Device {
         this.onTimer = false ;
     }
 }
+
+/* if your on local network type the local IP 
+    otherwise  type the global IP                */
+export var host = 'http://192.168.100.5:3000';

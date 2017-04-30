@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http,Headers, RequestOptions} from '@angular/http';
-import { Device } from './Device';
+import { Device ,host } from './Device';
 import 'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/Rx';
 import * as io from 'socket.io-client';
@@ -15,14 +15,9 @@ export class DeviceService{
 
     private options:RequestOptions ; 
     private socket:any = null;
-
-    /* if your on local network type the local IP 
-      otherwise  type the global IP                */
-    //initialize variables
-    private host = 'http://192.168.100.6:3000';
-
+    
     constructor(private http:Http){
-        this.socket = io(this.host);
+        this.socket = io(host);
         console.log('device service');
 
         //TODO remove
@@ -35,7 +30,7 @@ export class DeviceService{
 
     //serving all devices
     getDevices(){ 
-        return  this.http.get(this.host + '/all-devices').map(res=>res.json())
+        return  this.http.get(host + '/all-devices').map(res=>res.json())
                 .subscribe((res)=>{
                     this.devices.next(res.devices);
                     this.raspiPins.next(res.avaibleGPIO);
@@ -44,14 +39,14 @@ export class DeviceService{
 
     //changing device state (on/off)
     switchDeviceState(device:Device){
-        return this.http.put(this.host +'/sw-device/'+ device._id ,JSON.stringify(device),this.options)
+        return this.http.put(host +'/sw-device/'+ device._id ,JSON.stringify(device),this.options)
             .map(res => res.json());
     }
 
 
     // adding new device
     addDevice(device:Device) {
-        return this.http.post(this.host +'/add-device',JSON.stringify(device),this.options)
+        return this.http.post(host +'/add-device',JSON.stringify(device),this.options)
            .map(res => res.json());
     }
 
@@ -76,7 +71,7 @@ export class DeviceService{
             this.devices.next(tmpDeviceArray);
 
 
-            return this.http.delete(this.host +'/delete-device/'+ _id )
+            return this.http.delete(host +'/delete-device/'+ _id )
                 .map(res => res.json());
         } 
 
@@ -89,7 +84,7 @@ export class DeviceService{
         this.raspiPins.next(this.helpGPIO(this.devices._value));
         this.devices.next([]);
 
-        return this.http.delete(this.host +'/delete-all-devices')
+        return this.http.delete(host +'/delete-all-devices')
                 .map(res => res.json());
     }
 
@@ -116,7 +111,7 @@ export class DeviceService{
              device: device
             };
          
-        return this.http.post(this.host +'/set-timer/' + device._id.toString(),JSON.stringify(data),this.options)
+        return this.http.post(host +'/set-timer/' + device._id.toString(),JSON.stringify(data),this.options)
           .map(res => res.json());
     }
 
@@ -129,13 +124,20 @@ export class DeviceService{
 
     // specially for Advanced settings
     setApiKey(apiKey:any){
-        return this.http.post(this.host + '/change-api-key',{apiKey:apiKey},this.options)
+        return this.http.post(host + '/change-api-key',{apiKey:apiKey},this.options)
         .map(res=>res.json())
         .subscribe(res => console.log(res));
     }
     setCredentials(username:any,password:any){
-        return this.http.post(this.host + '/change-credentials',{username:username,password:password},this.options)
-        .map(res=>res.json)
+        return this.http.post(host + '/change-credentials',{username:username,password:password},this.options)
+        .map(res=>res.json())
         .subscribe(res => console.log(res));
+    }
+
+    getPinsList(list:any){
+        return this.http.get(host + '/advanced/get-pins',this.options).map(res=>res.json())
+    }
+    updatePinList(item:any){
+        return this.http.delete(host + "/updatePinList/" + item.toString(),this.options).map(res=> res.json());
     }
 }

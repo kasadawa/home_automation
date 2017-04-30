@@ -14,7 +14,10 @@ router.post('/',(req,res)=>{
     var adminUser = userData.username; 
     var decryptedPassword = sjcl.decrypt("password",userData.password);
     if((adminUser == username) && (password == decryptedPassword)){
-        var token = jwt.sign({ user:  username}, 'cert', { algorithm: 'HS256' });
+        var token = jwt.sign({
+            user:  username,
+            exp: Math.floor(Date.now() / 1000) + (60*60*3)
+        }, 'cert', { algorithm: 'HS256' });
         res.json(token);
     }else{
         res.json('faild on the server');

@@ -8,7 +8,7 @@ import { GetDevicesComponent } from '../get-devices/get-devices.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private auth:AuthenticationService) { }
+  constructor(private auth:AuthenticationService) {}
 
   ngOnInit() {
   }

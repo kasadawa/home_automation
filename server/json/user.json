@@ -1,5 +1,6 @@
 {
-	"username": "kasadawa",
-	"password": "{\"iv\":\"LZt68fdIpJI9I++vLoQylQ==\",\"v\":1,\"iter\":10000,\"ks\":128,\"ts\":64,\"mode\":\"ccm\",\"adata\":\"\",\"cipher\":\"aes\",\"salt\":\"DFr+aoRyFOM=\",\"ct\":\"Eb0nXM6xPMhPwfeix/2v\"}",
-	"apiKey": "mongodb://kasadawa:kasadawa@ds133388.mlab.com:33388/mean_appz"
+	"username": "admin",
+	"password": "{\"iv\":\"3QYmCZXtved8rSexWcn72g==\",\"v\":1,\"iter\":10000,\"ks\":128,\"ts\":64,\"mode\":\"ccm\",\"adata\":\"\",\"cipher\":\"aes\",\"salt\":\"EO4pBerBEx0=\",\"ct\":\"MBJ0QvBARe/19Np9lQ==\"}",
+	"apiKey": "mongodb://admin:admin@ds117311.mlab.com:17311/mean_test",
+	"pins": "P1-11,P1-12,P1-13,P1-16"
 }
