@@ -1,31 +1,34 @@
 # HomeAutomation
+  App specially build for Raspberry Pi devices. 
+  It's easy to use it for controlling array relays. 
+  The project is based on: Angular 2 CLI project and node-js server for backend. Controlling the Raspberry is implemented with Johnny-Five   library.  
+## Pre - requirements
+* NodeJS installed 
+* npm installed 
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.20-4.
+To install them run: 
+```
+sudo apt-get install nodejs npm node-semver
+```
+## Installation 
+Run : 
+```
+git clone https://github.com/kasadawa/home_automation.git
+```
+Navigate to home_automation/server and  install the dependencies: 
+```
+npm install
+```
+Then start the server : 
+```
+node server
+```
+Open the browser and navigate to ```192.168.100.5:3000```.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+NOTE! your local IP should be 192.168.100.5 (check it with ifconfig).
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Deploying to Github Pages
-
-Run `ng github-pages:deploy` to deploy to Github Pages.
-
-## Further help
-
-To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+If your IP is different you need to rebuild the project and restart the server.
+For further information go to ... 
+## Create MongoDB database
+Register to [mlab](www.mlab.com), create new database, add collection with name: ```devices``` , include user, copy and paste the generated URI( it should look like ```mongodb://<user>:<password>n@ds117311.mlab.com:17311/mean_test``` ).  
+Also Johnny-File requires [Raspi-io](https://github.com/nebrius/raspi-io) to be installed.
