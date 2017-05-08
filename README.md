@@ -31,7 +31,7 @@ Open the browser and navigate to ```192.168.100.5:3000```.
 
 *NOTE! your local IP should be 192.168.100.5 (check it with ifconfig).
 If your IP is different you need to rebuild the project and restart the server.
-For further information go to my [instructable]()*
+For further information go to my [instructable](https://www.instructables.com/id/Cheap-Effective-and-Modern-Home-Automation/)*
 
 The default usename and password are ```admin```.
 When you login you can change them from the Advanced option tab. Also after the first login you need to provide your own database:
