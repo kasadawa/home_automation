@@ -8,6 +8,7 @@ var sjcl = require('sjcl');
 var UserFile = fs.readFileSync('./json/user.json',"UTF-8");
 UserFile = JSON.parse(UserFile);
 var db = mongojs(UserFile.apiKey,['devices']);
+db.on('error',(err)=>console.log('database error (change the api-key or collection'))
 
 exports.db = db;
 
@@ -36,7 +37,7 @@ function removeDevices(devices){ // can work with multiply devices or with singl
                 five_relays.splice(g, 1);
             }
         }
-    } 
+    }
 }
 
 
@@ -193,16 +194,24 @@ router.post('/change-credentials',(req,res)=>{
     });
 });
 
-router.get('/advanced/get-pins',(req,res)=>{
-    pinsList = [] ;
-    for(let i = 11; i  <41 ; i++)
+//can be optimized
+router.get('/advanced/get-pins/:pin_id',(req,res)=>{
+    var pin_id = req.params.pin_id;
+    pinsList = [];
+    // if pin_id =1 it's Rasp model B+ else Model A and B
+    pinsList = pin_id == 1 ? UserFile.raspi_plus_avaible_pins.split(','):
+                             UserFile.raspi_avaible_pins.split(',');
+    
+    var data = [] ;
+    var forbidden = UserFile.pins.split(',');
+    pinsList.forEach((elem,index,object)=>
     {
-        if(!avaibleGPIOs.find(value=> value == ("P1-"+ i) ))
+        if(!forbidden.find(value=>value.toString() === elem.toString() ))
         {
-            pinsList.push("P1-"+ i);
+            data.push(elem);
         }
-    }
-    res.json(pinsList);
+    })
+    res.json(data);
 });
 
 router.delete('/updatePinList/:item', (req,res)=>{

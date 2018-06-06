@@ -1,14 +1,8 @@
-
-    <template #popTemplate>        
-            From: <timepicker [(ngModel)]="startTime" [showSpinners]="ismeridian" [showMeridian]="ismeridian" [readonlyInput]="!isEnabled"></timepicker>
-            To: <timepicker [(ngModel)]="endTime" [showSpinners]="ismeridian" [showMeridian]="ismeridian" [readonlyInput]="!isEnabled"></timepicker>                       
-            <br>
-            <button class="btn btn-primary" (click)="setTimer(device,true)" [disabled]="startDissable">Start</button>
-            <button class="btn btn-danger"(click)="setTimer(device,false)" [disabled]="stopDissable">Stop</button> 
-    </template>
 <h2>My devices</h2>
     <h3>{{temp}}</h3>
     <button class="btn btn-danger" *ngIf="devices.length > 0" (click)="deleteAllDevices()">Delete all devices</button>
+    <br>
+    <br>
     <div class="container" > 
         <div class="row" >
             <div class="col-md-3 col-sm-6" *ngFor="let device of devices; let i = index ;">

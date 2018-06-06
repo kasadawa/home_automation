@@ -2,5 +2,7 @@
 	"username": "admin",
 	"password": "{\"iv\":\"3QYmCZXtved8rSexWcn72g==\",\"v\":1,\"iter\":10000,\"ks\":128,\"ts\":64,\"mode\":\"ccm\",\"adata\":\"\",\"cipher\":\"aes\",\"salt\":\"EO4pBerBEx0=\",\"ct\":\"MBJ0QvBARe/19Np9lQ==\"}",
 	"apiKey": "mongodb://admin:admin@ds117311.mlab.com:17311/mean_test",
-	"pins": "P1-11,P1-12,P1-13,P1-16"
+	"pins": "P1-11,P1-12,P1-13,P1-16,P1-15",
+	"raspi_plus_avaible_pins":"P1-7,P1-11,P1-12,P1-13,P1-15,P1-16,P1-18,P1-22,P1-29,P1-31,P1-32,P1-33,P1-35,P1-36,P1-37,P1-38,P1-40",
+	"raspi_avaible_pins":"P1-11,P1-12,P1-13,P1-15,P1-16,P1-18,P1-19,P1-21,P1-22,P1-23,P1-24,P1-26"
 }

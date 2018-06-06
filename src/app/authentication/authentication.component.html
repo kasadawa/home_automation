@@ -1,28 +1,34 @@
+
 <div class="row">
+    <p *ngIf="alertFlag" class="bg-danger text-center">{{alertMessage}}</p>
    <div class="col-md-3 col-md-offset-4">
       <form>
-        <div class="form-group">
-          <label for="name">Username</label>
-          <input
-            type="text"
-            class="form-control"
-            #username
-            placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-          <label for="name">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            #password
-            placeholder="Enter your password">
-        </div>
-        <button
-          type="submit"
-          class="btn btn-default"
-          (click)="auth.login(username.value, password.value)">
-            Log In
-        </button>
+        <fieldset [disabled] ="blockFlag">
+          <div class="form-group">
+            <label for="name">Username</label>
+            <input
+              type="text"
+              name="username"
+              class="form-control"
+              #username
+              placeholder="Enter your email">
+          </div>
+          <div class="form-group">
+            <label for="name">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              #password
+              placeholder="Enter your password">
+          </div>
+          <button
+            type="submit"
+            class="btn btn-default "
+            (click)="auth.login(username.value, password.value)">
+              Log In
+          </button>
+        </fieldset>
       </form>
   </div>
 </div>

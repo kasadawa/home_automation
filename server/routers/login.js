@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var sjcl = require('sjcl');
 
+var err_counter = 0 ; 
 router.post('/',(req,res)=>{
     var username = req.body.name; 
     var password = req.body.password;
@@ -14,13 +15,18 @@ router.post('/',(req,res)=>{
     var adminUser = userData.username; 
     var decryptedPassword = sjcl.decrypt("password",userData.password);
     if((adminUser == username) && (password == decryptedPassword)){
+        if(err_counter !== 0 )err_counter = 0 ;
+
         var token = jwt.sign({
             user:  username,
             exp: Math.floor(Date.now() / 1000) + (60*60*3)
-        }, 'cert', { algorithm: 'HS256' });
-        res.json(token);
+        }, 'cern', { algorithm: 'HS256' });
+        res.json({"token":token});
     }else{
-        res.json('faild on the server');
+        var data = {"err":"Invalid username/password pair"}; 
+        err_counter ++ ;
+        if(err_counter >= 3) data.counter = true;
+        res.json(data);
     }
 
 })

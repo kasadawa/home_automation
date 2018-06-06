@@ -3,6 +3,11 @@ var router = express.Router();
 var mongojs = require('mongojs');
 var fs = require('fs');
 var sjcl = require('sjcl');
+const mail = require("./mail");
+// for socket io 
+var server = require('../server');
+var iosocket = server.io;
+
 //change the line below for your mongodb
 // copy the link in your database and paste your collection 
 var UserFile = fs.readFileSync('./json/user.json',"UTF-8");
@@ -17,6 +22,36 @@ var Raspi = require("raspi-io");
 var board = new five.Board({
   io: new Raspi()
 });
+
+
+board.on("ready", function() {
+    // Contact Mode: Normally Open (default!)
+    var sw = new five.Switch({pin:"P1-40"});
+    var trigger = false; 
+   
+    sw.on("open", function(){
+      if(trigger ) return ;
+
+        let obj = {status:"open"};
+        iosocket.emit('alertMagnetSensor',obj)
+        console.log("emiting data")
+        mail(obj.status);
+        trigger = true; 
+
+    });
+  
+    sw.on("close", function() {
+     if(!trigger)return;
+    
+        let obj = {status:"close"}
+        iosocket.emit('alertMagnetSensor',obj)
+        mail(obj.status);
+        console.log("emiting data")     
+        trigger = false; 
+
+    });
+
+  });
 
 // initialize array of relays | johny five
 // five_relays = [[five.Relay(), deviceObject()],[five.Relay(),deviceObject()],[]];

@@ -18,9 +18,14 @@ export class TimerModalComponent{
 
 
 
-  public startTime: Date = new Date();
-  public endTime: Date = new Date();
   public devices:any = [] ; 
+  public deviceStateString:string = '';
+
+  //for duration module
+  public durationH:number = 0 ; 
+  public durationM:number = 0 ; 
+  public durationS:number = 0 ; 
+  public durationResult:number = 0 ;
   //for socket io 
   private socket:any ; 
   constructor(private deviceservice:DeviceService){
@@ -29,6 +34,7 @@ export class TimerModalComponent{
   }
   ngOnInit(){
         this.socket.on('getTimer', (device:any)=>{   
+            this.durationResult = 0 ; 
             for(let index = 0 ; index  < this.devices.length ; index++)
             {
                 if(this.devices[index]._id == device._id){
@@ -36,23 +42,31 @@ export class TimerModalComponent{
                         this.devices[index].state = device.state; 
                         this.buttonStrings[index] = device.state ? 'Turn Off' : 'Turn On';
                         break; 
-                    // }
                 }
             };
+        this.changeDeviceStateString();            
         });
+
+  this.changeDeviceStateString();      
   }
 
   setTimer(device:any , trigger:boolean){
 
     let duration = this.getDurationTime();
 
-    if (duration < 0 )
+    if (duration <= 0 )
     { 
       alert("The duration is not properly setted! ")
       return ; 
     }
-    this.device.onTimer = trigger; 
 
+    // rounding the values
+    this.durationH = 0 ; 
+    this.durationM = 0 ; 
+    this.durationS = 0 ;
+    this.durationResult = duration;
+
+    this.device.onTimer = trigger; 
     var data = {
         duration : duration , 
         trigger  : trigger , 
@@ -62,13 +76,15 @@ export class TimerModalComponent{
   }
 
 
-getDurationTime(){
-    let minutes = this.endTime.getMinutes() - this.startTime.getMinutes();  
-    let hours = this.endTime.getHours() - this.startTime.getHours();
-    //
-    if(hours != 0 ) hours *=60 ;
-    return Math.round(minutes + hours) ; 
-}
+  getDurationTime(){
+    if(this.durationH > 0 || this.durationM > 0 || this.durationS > 0)
+    {
+      let duration = this.durationH*60*60 + this.durationM*60 + this.durationS ;     
+      return Math.round(duration); 
+    }
+
+    return -1 ;
+  }
   // specific for the modal  
   public show(){
     //workaround for version 2.2.xx
@@ -81,4 +97,7 @@ getDurationTime(){
     this.lgModal.hide();
   }
 
+  changeDeviceStateString(){
+    this.deviceStateString = this.device.state == true ? 'Turn off' : 'Turn on';
+  }
 }

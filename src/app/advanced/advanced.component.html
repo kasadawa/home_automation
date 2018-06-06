@@ -1,36 +1,54 @@
-<div class="col-md-6">
-  <h2>Advanced Options</h2>
-  <form >
-    <div class='form-group'>
-      <label for="database">Database API key: </label>      
-      <input type="text"  class="form-control" id="database" [(ngModel)]='database' placeholder="type database API key" [ngModelOptions]="{standalone: true}" ><br>
-    
-      <input type="button" class="btn btn-default"  value="Submit" (click)="setApiKey(apiKey)"> 
-      
-    </div>
-    <div class='form-group'>
-      <label for="username">Change username: </label>
-      <input id="username"  class="form-control" type="text" placeholder="type your new username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" ><br>
-    </div>
-    <div class='form-group'>
-      <label for="password">Change Password: </label>
-      <input id="password" class="form-control" type="password" placeholder="type your new password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"><br>
-    </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Advanced Options</h2>
+      <form>
+        <div class='form-group'>
+          <label for="database">Database API key: </label>
+          <input type="text" class="form-control" id="database" [(ngModel)]='database' placeholder="type database API key" [ngModelOptions]="{standalone: true}"><br>
 
-    <input type="button" class="btn btn-default"  value="Submit" (click)="setCredentials(username,password)"> 
+          <input type="button" class="btn btn-default" value="Submit" (click)="setApiKey(apiKey)">
 
-    <br>
-    <br>    
-    <h2>Raspberry Settings</h2>
+        </div>
+        <div class='form-group'>
+          <label for="username">Change username: </label>
+          <input id="username" class="form-control" type="text" placeholder="type your new username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"><br>
+        </div>
+        <div class='form-group'>
+          <label for="password">Change Password: </label>
+          <input id="password" class="form-control" type="password" placeholder="type your new password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"><br>
+        </div>
 
-    <div class='form-group'>
-      <label>Select Pins that you want to use: </label>
-      <select  class="form-control" [(ngModel)]="pin" [ngModelOptions]="{standalone: true}" id="pinSelection">
+        <input type="button" class="btn btn-default" value="Submit" (click)="setCredentials(username,password)">
+
+        <br>
+        <br>
+        <h2>Raspberry Settings</h2>
+        <div class='form-group'>
+          <label>Select Raspberry model: </label>
+          <select class="form-control" (change)="getPinList(imageNumber.value)" #imageNumber>
+        <option [value]="1" selected>Models A+, B+, Pi 2 B and Pi 3 B</option>
+        <option [value]="2">Models A and B</option>
+      </select><br>
+          <button type="button" class="btn btn-link" (click)="getImageString(imageNumber.value)">Show Pin image </button>
+
+          <br>
+          <label>Select Pins that you want to use: </label>
+          <select class="form-control" [(ngModel)]="pin" [ngModelOptions]="{standalone: true}" id="pinSelection">
         <option *ngFor="let item of pinList;let i = index" [ngValue]="item"> {{item}} </option>
       </select>
-      <input type="button"  class="btn btn-default" value="Submit" (click)="updatePinList(pin)" />
+          <input type="button" class="btn btn-default" value="Submit" (click)="updatePinList(pin)" />
+        </div>
+        <br>
+        <br>
+      </form>
     </div>
-    <br>
-    <br>
-  </form>
+
+    <div class="col-md-6" *ngIf="pinImageFlag">
+      <div class="text-center">
+        <img class="img-thumbnail" width="32%" [src]="imageString" />
+      </div>
+    </div>
+
+  </div>
 </div>

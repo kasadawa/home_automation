@@ -9,14 +9,16 @@ export class AdvancedComponent implements OnInit {
   public password:any;
   public apiKey:any;
   public pinList:any[]; 
-  public pin:any;  
+  public pin:any; 
+  public pinImageFlag:boolean = false; 
+  public imageString:string = '';
   constructor(private devservice:DeviceService){
       this.username = '';
       this.password = '';  
   }
 
   ngOnInit() {
-    this.getPinList();
+    this.getPinList(1);
   }
   setCredentials(username:any,password:any){
     if(username.length == 0 && password.length == 0){
@@ -32,8 +34,8 @@ export class AdvancedComponent implements OnInit {
     this.apiKey = '';
   }
 
-  getPinList(){
-    this.devservice.getPinsList(this.pinList).subscribe(res=>{
+  getPinList(pinId){
+    this.devservice.getPinsList(pinId).subscribe(res=>{
       this.pinList = res;
       this.pin = this.pinList[0]; 
     });
@@ -48,11 +50,14 @@ export class AdvancedComponent implements OnInit {
     var index = this.pinList.indexOf(selectedValue);
     this.pinList.splice(index,1);
 
-    this.pin = this.pinList[0]; 
-
+    this.pin = this.pinList[0];
   }
-  addPin(pin:any)
-  {
 
+  getImageString(value)
+  {
+    console.log(value);
+    this.pinImageFlag = true;
+    this.imageString = value ==1 ? './assets/images/raspberry-pi-1.png' : 
+                                  './assets/images/raspberry-pi-2.png';
   }
 }

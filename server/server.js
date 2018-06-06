@@ -28,8 +28,8 @@ module.exports = {
 };
 
 var login = require('./routers/login');
-var ioTimer = require('./timer/rasp_timer');
-var api = require('./routers/rasp_index');
+var ioTimer = require('./timer/timer');
+var api = require('./routers/index');
 app.use('/',api.router);
 app.use('/login',login.router);
 

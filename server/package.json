@@ -12,7 +12,6 @@
     "johnny-five": "^0.10.10",
     "jsonwebtoken": "^7.4.0",
     "mongojs": "^2.4.0",
-    "raspi-io": "^7.3.1",
     "request": "^2.79.0",
     "sjcl": "^1.0.6",
     "socket.io": "^1.7.2",

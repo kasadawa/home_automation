@@ -18,10 +18,7 @@ export class DeviceService{
     
     constructor(private http:Http){
         this.socket = io(host);
-        console.log('device service');
-
-        //TODO remove
-        this.http = http ;
+        
         var headers = new Headers({'Content-Type':'application/json'});
         this.options = new RequestOptions({headers:headers});
 
@@ -134,8 +131,8 @@ export class DeviceService{
         .subscribe(res => console.log(res));
     }
 
-    getPinsList(list:any){
-        return this.http.get(host + '/advanced/get-pins',this.options).map(res=>res.json())
+    getPinsList(pinId:any){
+        return this.http.get(host + '/advanced/get-pins/' + pinId.toString(),this.options).map(res=>res.json())
     }
     updatePinList(item:any){
         return this.http.delete(host + "/updatePinList/" + item.toString(),this.options).map(res=> res.json());

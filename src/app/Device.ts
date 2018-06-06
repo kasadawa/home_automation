@@ -18,4 +18,4 @@ export class Device {
 
 /* if your on local network type the local IP 
     otherwise  type the global IP                */
-export var host = 'http://192.168.100.5:3000';
+export var host = 'http://192.168.100.3:3000';
